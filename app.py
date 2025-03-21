@@ -2,7 +2,11 @@ from main import show_options, add_task, list_tasks, complete_task
 
 while True:
     show_options()
-    option = int(input("Selecione uma opção:\n"))
+    try:
+        option = int(input("Selecione uma opção:\n"))
+    except ValueError:
+        print("Entrada deve ser um número!")
+        continue
 
     match option:
         case 1:
