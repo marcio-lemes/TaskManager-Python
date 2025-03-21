@@ -20,9 +20,12 @@ def add_task():
         return
     description = input("Se quiser, informe a descrição da tarefa:\n")
     task = Task(title, description) #Cria o objeto da classe com os atributos que o usuário passar
-    session.add(task) #Adiciona no banco de dados
-    session.commit() #Realiza a mudança
-    print ("Tarefa adicionada com sucesso!")
+    try:
+        session.add(task) #Adiciona no banco de dados
+        session.commit() #Realiza a mudança
+        print ("Tarefa adicionada com sucesso!")
+    except Exception as e:
+        print(f"Erro ao adicionar tarefa: {e}")
     
 #Função para listar todas as tarefas pendentes
 def list_tasks():
@@ -36,7 +39,11 @@ def list_tasks():
         
 #Função para concluir tarefas
 def complete_task():
-    task_id = int(input("Digite o ID da tarefa que deseja concluir:\n"))
+    try:
+        task_id = int(input("Digite o ID da tarefa que deseja concluir:\n"))
+    except ValueError:
+        print("Entrada deve ser um número!")
+        return
     task = session.query(Task).filter(Task.id == task_id).first()
     if not task:
         print(f"Tarefa de ID {task_id} não encontrada.")
