@@ -1,5 +1,7 @@
 from conexao_orm import Base, engine, session
 from tasks import Task
+import csv
+import json
 
 #Cria as tabelas
 Base.metadata.create_all(engine)
@@ -11,7 +13,8 @@ def show_options():
     print("2 - Listar tarefas pendentes")
     print("3 - Marcar tarefa como concluída")
     print("4 - Remover uma tarefa")
-    print("5 - Sair")
+    print("5 - Exportar tarefas para arquivo")
+    print("6 - Sair")
 
 #Função para adicionar uma tarefa
 def add_task():
@@ -67,3 +70,43 @@ def remove_task():
     session.delete(task)
     session.commit()
     print(f"Tarefa ID {task_id} removida com sucesso!")
+    
+#Função para exportar tarefas para arquivos JSON ou CSV
+def export_tasks():
+    tasks = session.query(Task).all()
+    print("Deseja exportar em qual formato?")
+    print("1 - CSV")
+    print("2 - JSON")
+    try:
+        choice = int(input("> "))
+    except ValueError:
+        print("Entrada deve ser um número")
+        return
+    match choice:
+        case 1:
+            with open('tasks.csv', 'w', encoding='utf-8') as file:
+                writer = csv.writer(file)
+                writer.writerow(["ID", "Título", "Descrição", "Concluída", "Data de Criação"]) #Escreve a primeira linha (colunas)
+                for task in tasks: #Escreve todas as tarefas uma em cada linha
+                    writer.writerow([task.id, task.title, task.description, task.done, task.creation_date])
+                    print("Tarefas exportadas para tasks.csv!")
+        case 2:
+            with open('tasks.json', 'w', encoding='utf-8') as file:
+                json.dump( #Método usado para escrever os dados no arquivo tasks.json
+                    [
+                        {
+                            "id": task.id,
+                            "title": task.title,
+                            "description": task.description,
+                            "done": task.done,
+                            "creation_date": task.creation_date.isoformat() if task.creation_date else None,
+                        }
+                        for task in tasks
+                    ],
+                    file,
+                    ensure_ascii=False, #Garante que caracteres especiais sejam exibidos corretamente
+                    indent=4, #Adiciona indentação para tornar o JSON mais legível
+                )
+            print("Tarefas exportadas para tasks.json!")
+        case _:
+            print("Opção inválida.")
