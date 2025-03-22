@@ -40,7 +40,7 @@ def list_tasks():
         return
     print("Tarefas pendentes:")
     for task in tasks:
-        print(f"{task.id} - {task.title}")
+        print(f"{task.id} - {task.title}\n{task.description}")
       
 #Função para listar todas as tarefas concluídas
 def list_completed_tasks():
