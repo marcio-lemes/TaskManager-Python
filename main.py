@@ -14,7 +14,8 @@ def show_options():
     print("3 - Marcar tarefa como concluída")
     print("4 - Remover uma tarefa")
     print("5 - Exportar tarefas para arquivo")
-    print("6 - Sair")
+    print("6 - Listar tarefas concluídas")
+    print("7 - Sair")
 
 #Função para adicionar uma tarefa
 def add_task():
@@ -39,8 +40,18 @@ def list_tasks():
         return
     print("Tarefas pendentes:")
     for task in tasks:
-        print(f"{task.id} - {task.title}")
-        
+        print(f"{task.id} - {task.title}\n{task.description}")
+      
+#Função para listar todas as tarefas concluídas
+def list_completed_tasks():
+    tasks = session.query(Task).filter(Task.done == True).all()
+    if not tasks:
+        print("Nâo possui tarefas concluídas.")
+        return
+    print("Tarefas concluídas:")
+    for task in tasks:
+        print(f"{task.id} - {task.title}\n{task.description}")
+       
 #Função para concluir tarefas
 def complete_task():
     try:
