@@ -1,4 +1,4 @@
-from main import show_options, add_task, list_tasks, complete_task, remove_task, export_tasks
+from main import show_options, add_task, list_tasks, complete_task, remove_task, export_tasks, list_completed_tasks
 
 while True:
     show_options()
@@ -20,6 +20,8 @@ while True:
         case 5:
             export_tasks()
         case 6:
+            list_completed_tasks()
+        case 7:
             print("Saindo!")
             break
         case _:
