@@ -51,3 +51,18 @@ def complete_task():
     task.done = True
     session.commit()
     print(f"Tarefa '{task.title}' marcada com sucesso!")
+    
+#Função para remover tarefas
+def remove_task():
+    try:
+        task_id = int(input("Digite o ID da tarefa que deseja remover:\n"))
+    except ValueError:
+        print("Entrada deve ser um número!")
+        return
+    task = session.query(Task).filter(Task.id == task_id).first()
+    if not task:
+        print(f"Tarefa de ID {task_id} não encontrada.")
+        return
+    session.delete(task)
+    session.commit()
+    print(f"Tarefa ID {task_id} removida com sucesso!")
