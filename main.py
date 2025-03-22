@@ -10,7 +10,8 @@ def show_options():
     print("1 - Adicionar tarefa")
     print("2 - Listar tarefas pendentes")
     print("3 - Marcar tarefa como concluída")
-    print("4 - Sair")
+    print("4 - Remover uma tarefa")
+    print("5 - Sair")
 
 #Função para adicionar uma tarefa
 def add_task():
