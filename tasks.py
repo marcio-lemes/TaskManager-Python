@@ -11,6 +11,6 @@ class Task(Base):
     creation_date = Column(TIMESTAMP, server_default=func.now()) #Insere automaticamente no BD a data em que o objeto foi criado
     done = Column(Boolean, default=False)
     
-    def __init__(self, title, description):
+    def __init__(self, title, description): #Método construtor, faz com que esses atributos (title, description) devam ser passados como parâmetro na hora da criação do objeto dessa classe
         self.title = title
         self.description = description
