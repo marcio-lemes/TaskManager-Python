@@ -6,7 +6,7 @@ class Task(Base):
     __tablename__ = 'tasks' #Define o nome da tabela
     
     id = Column(Integer, primary_key=True)
-    title = Column(String, nullable=False)
+    title = Column(String, nullable=False) #Parâmetro que faz com que esse atributo não possa ser inserido vazio
     description = Column (String)
     creation_date = Column(TIMESTAMP, server_default=func.now()) #Insere automaticamente no BD a data em que o objeto foi criado
     done = Column(Boolean, default=False)
